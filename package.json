@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "build:dev": "esbuild src/main.js --global-name=b --format=iife --bundle --outdir=dev --allow-overwrite --watch --serve --servedir=dev",
+        "build:dev": "esbuild src/dom.js --global-name=b --format=iife --bundle --outdir=dev --allow-overwrite --watch --serve --servedir=dev",
         "test": "jest"
     },
     "devDependencies": {

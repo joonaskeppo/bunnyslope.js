@@ -151,43 +151,46 @@ const parse = (input) => {
 
 // We compile the parsed "AST" with data we've inferred from attributes, registry.
 
-const compileNode = (node, data) => {
+const compileNode = (node, data, opts) => {
     switch (node.type) {
         // Function call
         case "list":
             const fName = node.value[0].value;
+            const f = data[fName];
             if ("symbol" !== node.value[0].type) {
                 throw new Error(
                     `Expected a symbol for fn call, got a ${node.value[0].type}.`
                 );
             }
-            if (!data[fName]) {
+            if (!f) {
                 throw new Error(
                     `'${fName}' not found, could not eval function.`
                 );
             }
-            const f = data[fName];
             const args = node.value
                 .slice(1)
-                .map((arg) => compileNode(arg, data));
+                .map((arg) => compileNode(arg, data, opts));
             return f.apply(null, args);
         // Just an array
         case "vector":
-            return node.value.map((elt) => compileNode(elt, data));
+            return node.value.map((elt) => compileNode(elt, data, opts));
         case "symbol":
-            return data[node.value];
+            return (
+                (opts.getSymbolValue && opts.getSymbolValue(node.value)) ||
+                data[node.value]
+            );
         case "number":
         case "string":
             return node.value;
     }
 };
 
-const compile = (ast, data) => {
+const compile = (ast, data, opts = {}) => {
     let acc = [];
     let rem = ast;
 
     for (const node of ast) {
-        value = compileNode(node, data);
+        value = compileNode(node, data, opts);
         acc.push(value);
     }
 
