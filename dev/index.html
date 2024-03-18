@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test</title>
+    <style>
+      .highlight {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>When-conditions</h2>
+      <div b-when:state="default">Shown by default</div>
+      <div b-when-not:state="default">Shown when not default</div>
+      <div b-when:flag="show-branch">Shown when show-branch flagged</div>
+      <div b-when-not:flag="show-branch">
+        Shown when show-branch not flagged
+      </div>
+    </div>
+
+    <div>
+        <h2>HTML</h2>
+        <div b-html:store="the-inner-html"></div>
+    </div>
+
+    <div>
+      <h2>Enumerations</h2>
+      <ol b-for:store="[item the-items]">
+        <li>
+          <!-- Should be able to infer binding from parent -->
+          <p b-text="item"></p>
+        </li>
+      </ol>
+      <ul b-for:fn="[item (get-items)]">
+         <!-- We can also use fns with bindings -->
+        <li b-text:fn="(get-item-mapping item)"></li>
+        <!-- 0-ary cases -->
+        <li b-text:fn="(get-fixed-mapping)"></li>
+      </ul>
+    </div>
+    
+    <div>
+      <h2>Events</h2>
+      <button
+        b-onclick="[[target 'h3#opcodes'] [add-class 'highlight'] [wait 2000] [remove-class 'highlight']]"
+      >
+        Momentary highlight
+      </button>
+      <div></div>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
