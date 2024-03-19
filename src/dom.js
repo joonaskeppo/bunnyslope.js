@@ -1,4 +1,4 @@
-import { REIFICATION, TEMPLATE, INDEX, BINDING, PREFIX } from "./internals";
+import { REIFICATION, TEMPLATE, INTERNAL_PREFIX, BINDING, PREFIX } from "./internals";
 import { parse, compile } from "./dsl";
 
 // Namespaces for DSL
@@ -121,6 +121,9 @@ export const initialize = () => {
     for (const elt of document.querySelectorAll("body *")) {
         if (elt.hasAttribute(REIFICATION)) {
             elt.remove();
+        }
+        for (const attr of getInstrumentations(elt, INTERNAL_PREFIX)) {
+            elt.removeAttribute(attr.name);
         }
     }
 };

@@ -1,5 +1,5 @@
 export const PREFIX = 'b-';
-const INTERNAL_PREFIX = `__${PREFIX}`;
+export const INTERNAL_PREFIX = `__${PREFIX}`;
 
 export const REIFICATION = `${INTERNAL_PREFIX}reification`;
 export const TEMPLATE = `${INTERNAL_PREFIX}template`;
