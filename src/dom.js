@@ -67,7 +67,7 @@ export const handlers = {
     for: (elt, value) => {
         const tmplContent = elt.children[0];
         const child =
-            tmplContent.tagName !== "template"
+            tmplContent.tagName.toLowerCase() !== "template"
                 ? wrapWith(tmplContent, "template")
                 : tmplContent;
         child.setAttribute(TEMPLATE, "");
@@ -113,9 +113,10 @@ const process = (elt) => {
 };
 
 export const initialize = () => {
-    // Clear reified elements
-    for (const item of document.querySelectorAll(REIFICATION)) {
-        item.remove();
+    for (const elt of document.querySelectorAll("body *")) {
+        if (elt.hasAttribute(REIFICATION)) {
+            elt.remove();
+        }
     }
 };
 
