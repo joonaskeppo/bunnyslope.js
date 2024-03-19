@@ -76,12 +76,17 @@ export const handlers = {
         const bindingValues = value[1];
 
         for (let i = 0; i < bindingValues.length; i++) {
-            const copy = tmplContent.cloneNode(true);
-            copy.setAttribute(INDEX, "" + i);
+            const copy = child.children[0].cloneNode(true);
             copy.setAttribute(REIFICATION, "");
+            setBinding(copy, "index", i);
             setBinding(copy, bindingKey, bindingValues[i]);
             elt.appendChild(copy);
             process(copy);
+        }
+    },
+    let: (elt, value) => {
+        for (const [k, v] of value) {
+            setBinding(elt, k, v);
         }
     },
 };

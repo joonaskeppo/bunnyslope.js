@@ -26,6 +26,14 @@
         <div b-html:fn-stuff="(render)"></div>
     </div>
 
+    <div b-let="[['bound' 'this is bound!'] ['another-one' 'and so is this']]">
+        <h2>Let-bindings</h2>
+        <div>
+            <p b-text="bound"></p>
+            <p b-text="another-one"></p>
+        </div>
+    </div>
+
     <div>
       <h2>Enumerations</h2>
       <!-- TODO:
